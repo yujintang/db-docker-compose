@@ -1,0 +1,67 @@
+version: "3"
+services:
+  my-rabbit:
+    image: 'rabbitmq:3-management'
+    hostname: "my-rabbit"
+    env_file: 
+      - ./rabbitmq/.env
+    ports:
+      - 15672:15672
+      - 5672:5672
+    restart: always
+    labels:
+      type: "db"
+      name: "my-rabbit"
+    volumes:
+      - ./rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
+      - rabbit-data:/var/lib/rabbitmq/mnesia/rabbit@my-rabbit
+  
+  my-mysql:
+    image: 'mysql:5.7'
+    hostname: "my-mysql"
+    env_file:
+      - ./mysql/.env
+    ports:
+      - 3306:3306
+    restart: always
+    labels:
+      type: "db"
+      name: "my-mysql"
+    volumes:
+      - ./mysql/example.sql:/docker-entrypoint-initdb.d/example.sql
+      - mysql-data:/var/lib/mysql
+  
+  my-mongo:
+    image: 'mongo:latest'
+    hostname: "my-mongo"
+    env_file:
+      - ./mongo/.env
+    restart: always
+    ports:
+      - 27017:27017
+    labels:
+      type: "db"
+      name: "my-mongo"
+    volumes:
+      - ./mongo/example.js:/docker-entrypoint-initdb.d/example.js
+      - mongo-data:/data/db
+  
+  my-redis:
+    image: 'redis:latest'
+    hostname: "my-redis"
+    restart: always
+    ports:
+      - 6379:6379
+    labels:
+      type: "db"
+      name: "my-redis"
+    volumes:
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - redis-data:/data
+    command: redis-server /usr/local/etc/redis/redis.conf
+  
+volumes:
+  rabbit-data:
+  mysql-data:
+  mongo-data:
+  redis-data:
