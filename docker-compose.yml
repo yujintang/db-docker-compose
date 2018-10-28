@@ -31,6 +31,20 @@ services:
       - ./mysql/example.sql:/docker-entrypoint-initdb.d/example.sql
       - mysql-data:/var/lib/mysql
   
+  my-postgres:
+    image: 'postgres:9.4'
+    hostname: 'my-postgres'
+    env_file:
+      - ./postgres/.env
+    ports:
+      - 5432:5432
+    restart: always
+    labels:
+      type: 'db'
+      name: 'my-postgres'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
   my-mongo:
     image: 'mongo:latest'
     hostname: "my-mongo"
@@ -63,5 +77,6 @@ services:
 volumes:
   rabbit-data:
   mysql-data:
+  postgres-data:
   mongo-data:
   redis-data:
