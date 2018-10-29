@@ -28,7 +28,6 @@ services:
       type: "db"
       name: "my-mysql"
     volumes:
-      - ./mysql/example.sql:/docker-entrypoint-initdb.d/example.sql
       - mysql-data:/var/lib/mysql
   
   my-postgres:
@@ -57,7 +56,6 @@ services:
       type: "db"
       name: "my-mongo"
     volumes:
-      - ./mongo/example.js:/docker-entrypoint-initdb.d/example.js
       - mongo-data:/data/db
   
   my-redis:
