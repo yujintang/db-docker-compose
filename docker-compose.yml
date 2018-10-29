@@ -74,9 +74,24 @@ services:
       - redis-data:/data
     command: redis-server /usr/local/etc/redis/redis.conf
   
+  my-portainer:
+    image: 'portainer/portainer'
+    hostname: 'my-portainer'
+    restart: always
+    ports:
+      - 9000:9000
+    labels:
+      type: "db"
+      name: "my-portainer"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    command: -H unix:///var/run/docker.sock
+
 volumes:
   rabbit-data:
   mysql-data:
   postgres-data:
   mongo-data:
   redis-data:
+  portainer_data:
