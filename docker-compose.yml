@@ -58,6 +58,19 @@ services:
     volumes:
       - mongo-data:/data/db
   
+  my-shadowsocks:
+    image: 'shadowsocks/shadowsocks-libev'
+    hostname: "my-shadowsocks"
+    restart: always
+    ports:
+      - "11100-11199:11100-11199"
+    volumes:
+      - ./shadowsocks/server-multi-passwd.json /etc/server-multi-passwd.json
+    labels:
+      type: "tool"
+      name: "my-shadowsocks"
+    command: ss-server --manager-address /var/run/shadowsocks-manager.sock -c /etc/server-multi-passwd.json
+  
   my-redis:
     image: 'redis:latest'
     hostname: "my-redis"
@@ -79,7 +92,7 @@ services:
     ports:
       - 9000:9000
     labels:
-      type: "db"
+      type: "tool"
       name: "my-portainer"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
