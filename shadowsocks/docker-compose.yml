@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+
+  shadowsocks-libev:
+    image: 'shadowsocks/shadowsocks-libev'
+    hostname: "shadowsocks-libev"
+    restart: always
+    ports:
+      - "8388:8388/tcp"
+      - "8388:8388/udp"
+    labels:
+      type: "shadowsocks"
+      name: "ss-server"
+    command: ss-server -m aes-256-cfb -p 8388 -k shanquan54@gmail.com --manager-address 127.0.0.1:8389
+
+  shadowsocks-manager:
+    image: gyteng/ssmgr
+    hostname: shadowsocks-manager
+    depends_on:
+      - shadowsocks-libev
+      - shadowsocks--redis
+    volumes:
+      - ./.ssmgr:/etc/.ssmgr
+    labels:
+      type: "shadowsocks"
+      name: "ss-manager"
+    command: >
+      sh -c "ssmgr -c /etc/.ssmgr/ss.yml &&
+             ssmgr -c /etc/.ssmgr/webgui.yml"
+
+  shadowsocks--redis:
+    image: 'redis:latest'
+    hostname: shadowsocks-redis
+    restart: always
+    ports:
+      - 8341:8341
+    labels:
+      type: "shadowsocks"
+      name: "redis"
+    volumes:
+      - ss-redis-data:/data
+    command: redis-server --port 8341 --requirepass mypassword
+volumes:
+  ss-redis-data:

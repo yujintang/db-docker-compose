@@ -1,0 +1,8 @@
+type: s
+
+shadowsocks:
+  address: 127.0.0.1:8388    #shadowsocks的管理端口
+manager:
+  address: 0.0.0.0:8389      #这个 address 参数会让程序监听一个 tcp 端口，用于接收 webgui 发送过来的控制命令
+  password: '123456'           #webgui添加节点时的密码
+db: 'ss.sqlite'
