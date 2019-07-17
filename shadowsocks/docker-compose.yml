@@ -34,12 +34,12 @@ services:
     hostname: shadowsocks-redis
     restart: always
     ports:
-      - 8341:8341
+      - 8391:8391
     labels:
       type: "shadowsocks"
       name: "redis"
     volumes:
       - ss-redis-data:/data
-    command: redis-server --port 8341 --requirepass mypassword
+    command: redis-server --port 8391 --requirepass mypassword
 volumes:
   ss-redis-data:

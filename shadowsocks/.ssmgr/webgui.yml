@@ -25,7 +25,7 @@ plugins:
   webgui:
     use: true
     host: '0.0.0.0'
-    port: '8342'
+    port: '8390'
     site: 'http://yourwebsite.com'
     # cdn: 'http://xxx.com' # 静态资源cdn地址，可省略
     # icon: 'icon.png' # 自定义首页图标，默认路径在 ~/.ssmgr 可省略
@@ -54,6 +54,6 @@ plugins:
 db: 'webgui.sqlite'
 redis:
   host: '127.0.0.1'
-  port: 8341
+  port: 8391
   password: 'mypassword'
   db: 0
