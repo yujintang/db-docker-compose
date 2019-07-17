@@ -58,6 +58,18 @@ services:
     volumes:
       - mongo-data:/data/db
   
+  my-shadowsocks:
+    image: 'shadowsocks/shadowsocks-libev'
+    hostname: "my-shadowsocks"
+    env_file:
+      - ./shadowsocks/.env
+    restart: always
+    ports:
+      - "8388:8388"
+    labels:
+      type: "tool"
+      name: "my-shadowsocks"
+  
   my-redis:
     image: 'redis:latest'
     hostname: "my-redis"
