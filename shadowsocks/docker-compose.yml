@@ -21,13 +21,13 @@ services:
       - shadowsocks-libev
       - shadowsocks--redis
     volumes:
-      - ./.ssmgr:~/.ssmgr
+      - ./.ssmgr:/etc/.ssmgr
     labels:
       type: "shadowsocks"
       name: "ss-manager"
     command: >
-      sh -c "ssmgr -c ~/.ssmgr/ss.yml -r &
-             ssmgr -c ~/.ssmgr/webgui.yml"
+      sh -c "ssmgr -c /etc/.ssmgr/ss.yml -r &
+             ssmgr -c /etc/.ssmgr/webgui.yml"
 
   shadowsocks--redis:
     image: 'redis:latest'
