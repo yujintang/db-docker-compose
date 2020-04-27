@@ -1,0 +1,15 @@
+version: "3"
+services:
+  my-theia:
+    image: 'theiaide/theia:next'
+    hostname: "my-theia"
+    ports:
+      - 19929:9229
+      - 19928:3000
+    restart: always
+    labels:
+      type: "tools"
+      name: "my-theia"
+    volumes:
+      - .:/home/project:cached
+ 
